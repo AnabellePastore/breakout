@@ -171,6 +171,9 @@ let colidindo: boolean = false
 const sound = new Sound('./src/sound/audio.wav ');
 const loader = new Loader([sound]);
 
+const die = new Sound('./scr/sound/perdeu.wav');
+
+
 //vc pode ter um loader no jogo ou um loader por cena
 
 bolinha.on("collisionstart", (event) => {
@@ -229,9 +232,13 @@ bolinha.on("collisionend", () => {
 })
 
 bolinha.on("exitviewport", () => {
+	//colocar som quando morre
+
+die.play()
 	alert("vc morreu")
 	window.location.reload()
 })
+
 
 
 //o await serve para mostrar para o start, uma função assincrona(funciona independente do carregamento de outros itens)esperar o item loader carregar primeiro
