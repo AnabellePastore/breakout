@@ -42,6 +42,23 @@ const bolinha = new Actor({
 
 bolinha.body.collisionType = CollisionType.Passive
 
+//lista de cores
+// let coresbolinhas = [
+// 	Color.Black,
+// 	Color.Chartreuse,
+// 	Color.Cyan,
+// 	Color.Green,
+// 	Color.Magenta,
+// 	Color.Orange,
+// 	Color.Red,
+// 	Color.Rose,
+// 	Color.White,
+// 	Color.Yellow
+// ]
+//length -> comprimento da lista
+//let numeroCores = coresbolinhas.length
+
+
 //5 -  criar movimentação da bolinha
 const velocidadeBolinha = vec(400, 400)
 
@@ -149,11 +166,12 @@ const textoPontos = new Label({
 game.add(textoPontos)
 
 
-
+//colocar som ao colidir com as barras
 let colidindo: boolean = false
 const sound = new Sound('./src/sound/audio.wav ');
 const loader = new Loader([sound]);
 
+//vc pode ter um loader no jogo ou um loader por cena
 
 bolinha.on("collisionstart", (event) => {
 
@@ -168,6 +186,12 @@ bolinha.on("collisionstart", (event) => {
 		//adicionanum ponto
 		pontos ++
 
+		//mudar a cor da bolinha
+		//bolinha.color = coresbolinhas[ Math.random() * numeroCores ]
+
+		//mudar a cor da bolinha com a cor do bloco colidido
+		bolinha.color = event.other.color
+
 		sound.play(0.5);
 		//atuaiza valor do placar - textosPontos
 		textoPontos.text = pontos.toString()
@@ -175,9 +199,9 @@ bolinha.on("collisionstart", (event) => {
 
 	//rebater a bolinha + inverter as direções
 	let interseccao = event.contact.mtv.normalize()
-
+//adicionar mensagem de vitoria
 	if(pontos == 15){
-		alert("você venceu")
+		alert("você venceu!!!!")
 		window.location.reload()
 	}
 
@@ -210,7 +234,7 @@ bolinha.on("exitviewport", () => {
 })
 
 
-
+//o await serve para mostrar para o start, uma função assincrona(funciona independente do carregamento de outros itens)esperar o item loader carregar primeiro
 
 game.start(loader)
 //inicia o game
